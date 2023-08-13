@@ -2,6 +2,9 @@ const fs = require("fs");
 const fsp = require("fs").promises;
 const crypto = require("crypto");
 const path = require("path");
+const { PassThrough } = require("stream");
+
+const { massagePath } = require("./utils");
 
 function getFileHash(filePath, algorithm = "md5") {
   return new Promise((resolve, reject) => {
@@ -54,10 +57,9 @@ async function searchDuplicates(rootDir, hashAlgorithm = "md5") {
   return duplicates;
 }
 
-async function processFile(data, outputDir) {
+async function processFile(data, outputDir, nameOfFile) {
   try {
-    const outputPath = outputDir + "/duplicates.json";
-
+    const outputPath = massagePath(outputDir, nameOfFile);
     // Check if the file exists
     if (!fs.existsSync(outputPath)) {
       fs.writeFileSync(outputPath, "", (err) => {
@@ -81,12 +83,19 @@ async function processFile(data, outputDir) {
     const dataJson = JSON.stringify(data);
 
     const writeStream = fs.createWriteStream(outputPath, { flags: "a" });
-    writeStream.write(dataJson, "utf-8");
 
-    writeStream.end();
+    // Create a PassThrough stream
+    const passThroughStream = new PassThrough();
+
+    // Pipe the data to the PassThrough stream first
+    passThroughStream.end(dataJson, "utf-8");
+
+    // Pipe the PassThrough stream to both the file and the terminal
+    passThroughStream.pipe(writeStream);
+    passThroughStream.pipe(process.stdout); // Pipe to the terminal
 
     writeStream.on("finish", () => {
-      console.log(`Processed stats and saved output to ${outputPath}`);
+      console.log(`\n\nProcessed stats and saved output to ${outputPath}`);
     });
 
     writeStream.on("error", (err) => {
