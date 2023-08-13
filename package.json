@@ -1,0 +1,11 @@
+{
+  "name": "findduplicates",
+  "version": "1.0.0",
+  "description": "Helps you find duplicate files on your system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "James Carvallyo II",
+  "license": "BSD-2-Clause"
+}
