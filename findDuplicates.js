@@ -60,7 +60,7 @@ async function processFile(data, outputDir) {
 
     // Check if the file exists
     if (!fs.existsSync(outputPath)) {
-      fs.writeFile(outputPath, "", (err) => {
+      fs.writeFileSync(outputPath, "", (err) => {
         if (err) {
           console.error("Error creating file:", err);
         } else {
