@@ -1,4 +1,4 @@
-# findDuplicates
+# Clone Spotter
 
 A command line tool (made with NODEJS) to find duplicate files within your system based on file content.
 
