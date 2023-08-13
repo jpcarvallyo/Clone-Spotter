@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { PassThrough } = require("stream");
 const readline = require("readline");
 
 const {
@@ -23,8 +22,18 @@ async function main() {
 
       await rl.question("Enter the output file path: ", async (outputPath) => {
         await rl.question("Enter name of file: ", async (fileName) => {
-          await processFile(dupMap, cleanDirPath(outputPath), fileName);
-          rl.close();
+          await rl.question(
+            "Output to terminal as well?",
+            async (outputToTerminal) => {
+              await processFile(
+                dupMap,
+                cleanDirPath(outputPath),
+                fileName,
+                outputToTerminal
+              );
+              rl.close();
+            }
+          );
         });
       });
     }

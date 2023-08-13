@@ -57,7 +57,12 @@ async function searchDuplicates(rootDir, hashAlgorithm = "md5") {
   return duplicates;
 }
 
-async function processFile(data, outputDir, nameOfFile) {
+async function processFile(
+  data,
+  outputDir,
+  nameOfFile,
+  outputToTerminal = false
+) {
   try {
     const outputPath = massagePath(outputDir, nameOfFile);
     // Check if the file exists
@@ -92,7 +97,14 @@ async function processFile(data, outputDir, nameOfFile) {
 
     // Pipe the PassThrough stream to both the file and the terminal
     passThroughStream.pipe(writeStream);
-    passThroughStream.pipe(process.stdout); // Pipe to the terminal
+
+    if (
+      outputToTerminal.toLowerCase().includes("true") ||
+      outputToTerminal.toLowerCase().includes("yes") ||
+      outputToTerminal.toLowerCase().includes("y")
+    ) {
+      passThroughStream.pipe(process.stdout); // Pipe to the terminal
+    }
 
     writeStream.on("finish", () => {
       console.log(`\n\nProcessed stats and saved output to ${outputPath}`);
