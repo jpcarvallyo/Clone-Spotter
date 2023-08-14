@@ -23,3 +23,4 @@ It asks three major questions:
 1) Enter the directory to start search at: ```~/Desktop```
 2) Enter the output file path: ```~/Desktop```
 3) Enter name of file: ```duplicates```
+4) Output to terminal as well? [y/n]: ```y```
