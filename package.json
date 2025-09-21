@@ -1,12 +1,34 @@
 {
-  "name": "findduplicates",
-  "version": "1.0.0",
-  "description": "Helps you find duplicate files on your system",
+  "name": "clone-spotter",
+  "version": "2.0.0",
+  "description": "A powerful command-line tool to find duplicate files based on content",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+  "bin": {
+    "clone-spotter": "./index.js"
   },
+  "scripts": {
+    "start": "node index.js",
+    "interactive": "node index.js --interactive",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "help": "node index.js --help",
+    "version": "node index.js --version"
+  },
+  "keywords": [
+    "duplicate",
+    "files",
+    "hash",
+    "content",
+    "cli",
+    "finder",
+    "cleanup"
+  ],
   "author": "James Carvallyo II",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamescarvallyo/clone-spotter.git"
+  }
 }
